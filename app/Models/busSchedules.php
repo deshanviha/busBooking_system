@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Buses extends Model
+class busSchedules extends Model
 {
     use HasFactory;
-    protected $fillable = [
+    protected $fillable=[
 
-        'name',
-        'type',
-        'vehicle_number'
+    'bus_route_id',
+    'direction',
+    'start_timestamp',
+    'end_timestamp'
 
     ];
 
