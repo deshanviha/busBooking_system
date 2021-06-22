@@ -25,6 +25,20 @@ class routeController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        $validateData= $request->validate([
+
+            'node_one'=>'required',
+            'node_two'=>'required',
+            'route_number'=>'required',
+            'distance'=>'required|ends_with:km',
+            'time'=>'required'
+
+
+        ]);
+
+
         return routes::create($request->all());
     }
 
@@ -48,6 +62,9 @@ class routeController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
+
         $route = routes::find($id);
         $route -> update ($request->all());
 

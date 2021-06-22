@@ -29,8 +29,8 @@ class busScheduleController extends Controller
 
             'bus_route_id'=>'exists:App\Models\busRoutes,id',
             'direction'=>'required',
-            'start_timestamp'=>'required',
-            'end_timestamp'=>'required'
+            'start_timestamp'=>'date_format:"H:i"|required',
+            'end_timestamp'=>'date_format:"H:i"|required'
 
         ]);
         return busSchedules::create($request->all());
