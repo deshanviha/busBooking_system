@@ -54,6 +54,7 @@ class busControl extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $bus = Buses::find($id);
         $bus -> update ($request->all());
 

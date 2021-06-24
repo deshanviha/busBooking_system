@@ -28,7 +28,7 @@ class busRouteController extends Controller
         $request->validate([
             'bus_id'=>'exists:App\Models\Buses,id',
             'route_id'=>'exists:App\Models\routes,id',
-            'status'
+            'status'=>'required'
         ]);
         return busRoutes::create($request-> all());
     }
@@ -54,6 +54,12 @@ class busRouteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'bus_id'=>'exists:App\Models\Buses,id',
+            'route_id'=>'exists:App\Models\routes,id'
+        ]);
+
+
         $busroutes = busRoutes::find($id);
         $busroutes->update($request->all());
     }

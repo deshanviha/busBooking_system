@@ -27,7 +27,7 @@ class routeController extends Controller
     {
 
 
-        $validateData= $request->validate([
+        $request->validate([
 
             'node_one'=>'required',
             'node_two'=>'required',
@@ -63,6 +63,11 @@ class routeController extends Controller
     public function update(Request $request, $id)
     {
 
+        $request->validate([
+
+            'distance'=>'ends_with:km',
+
+        ]);
 
 
         $route = routes::find($id);

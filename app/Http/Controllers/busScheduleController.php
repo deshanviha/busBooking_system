@@ -28,9 +28,8 @@ class busScheduleController extends Controller
         $request->validate([
 
             'bus_route_id'=>'exists:App\Models\busRoutes,id',
-            'direction'=>'required',
-            'start_timestamp'=>'date_format:"H:i"|required',
-            'end_timestamp'=>'date_format:"H:i"|required'
+            'start_timestamp'=>'date_format:"H:i"',
+            'end_timestamp'=>'date_format:"H:i"'
 
         ]);
         return busSchedules::create($request->all());
@@ -57,6 +56,15 @@ class busScheduleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+
+            'bus_route_id'=>'exists:App\Models\busRoutes,id',
+            'start_timestamp'=>'date_format:"H:i"',
+            'end_timestamp'=>'date_format:"H:i"'
+
+        ]);
+
+
         $scheduleUpdate = busSchedules::find($id);
         $scheduleUpdate->update($request->all());
     }

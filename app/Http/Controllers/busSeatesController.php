@@ -54,6 +54,11 @@ class busSeatesController extends Controller
     public function update(Request $request, $id)
     {
 
+        $request ->validate([
+            'bus_id' => 'exists:App\Models\Buses,id',
+        ]);
+
+
         $updateBusRoute = busSeat::find($id);
         $updateBusRoute-> update($request->all());
     }
