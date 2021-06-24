@@ -59,6 +59,7 @@ Route::post('/login',[userController::class, 'login']);
 
 
 
+
 //Route::resource('buses', busControl::class);
 //Route::resource('routes',routeController::class);
 //Route::resource('busseats', busSeatesController::class);
@@ -71,10 +72,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+
+ Route::post('/buses',[busControl::class, 'store']);
+
+
+
+
 //protected route
 Route::group(['middleware'=>['auth:sanctum']], function () {
 
-    Route::post('/buses',[busControl::class, 'store']);
+   // Route::post('/buses',[busControl::class, 'store']);
     Route::put('/buses/{id}',[busControl::class, 'update']);
     Route::delete('/buses/{id}',[busControl::class, 'destroy']);
 
@@ -100,6 +107,14 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
 
     Route::post('/logout',[userController::class, 'logout']);
     Route::put('/changePassword/{id}',[userController::class, 'changePassword']);
+
+
+
+    Route::get('/reset-password/{token}', function ($token) {
+        return view('auth.reset-password', ['token' => $token]);
+    })->middleware('guest')->name('password.reset');
+
+    Route::post('password/email', [userController::class, 'forgot']);
 
 
 });

@@ -26,12 +26,15 @@ class busControl extends Controller
      */
     public function store(Request $request)
     {
+
         $request ->validate([
            'name' => 'required',
            'type' => 'required',
             'vehicle_number' => 'required'
         ]);
         return Buses::create($request->all());
+
+
     }
 
     /**
@@ -52,11 +55,17 @@ class busControl extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id )
     {
 
         $bus = Buses::find($id);
         $bus -> update ($request->all());
+
+        if ($request->user()->cannot('update', $id)) {
+            abort(403);
+        }
+
+
 
         return $bus;
     }
@@ -82,5 +91,8 @@ class busControl extends Controller
     {
         return Buses::where('name', 'like' ,'%'.$name.'%')->get();
     }
+
+
+
 
 }

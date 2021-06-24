@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Password;
 
 class userController extends Controller
 {
@@ -19,16 +20,30 @@ class userController extends Controller
 
         ]);
 
-        $user= User::create([
+        if('name' === "admin||Admin") {
 
-           'name' => $fields['name'],
-           'email' => $fields['email'],
-            'password'=> bcrypt($fields['password'])
+            $user = User::create([
+
+                'name' => $fields['name'],
+                'email' => $fields['email'],
+                'password' => bcrypt($fields['password'])
+
+            ]);
+
+        }else{
+
+            $user = superAdmin::create([
+
+                'name' => $fields['name'],
+                'email' => $fields['email'],
+                'password' => bcrypt($fields['password'])
+
+            ]);
 
 
+        }
 
 
-        ]);
 
         $token = $user->createToken('bustoken')->plainTextToken;
 
@@ -120,5 +135,18 @@ class userController extends Controller
            'message'=>"Password reset successfully"
         ]);
     }
+
+    public function forgot(){
+
+
+            $credentials = request()->validate(['email' => 'required|email']);
+
+            Password::sendResetLink($credentials);
+
+            return response()->json(["msg" => 'Reset password link sent on your email id.']);
+
+
+    }
+
 
 }
