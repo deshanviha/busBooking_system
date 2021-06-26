@@ -88,7 +88,7 @@ class routeController extends Controller
     }
 
     /**
-     * Search bus.
+     * Search routes.
      *
      * @param  str  $route_num
      * @return \Illuminate\Http\Response

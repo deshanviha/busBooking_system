@@ -34,7 +34,7 @@ class busScheduleBookingController extends Controller
     public function store(Request $request, $seatId , $userId ,$scheduleId )
     {
 
-
+//validate details
        $request->validate([
 
            'bus_seat_id'=>('exists\App\Models\busSeat,id'),
@@ -45,7 +45,7 @@ class busScheduleBookingController extends Controller
 
 
         $busScheduleBooking = new busScheduleBooking();
-
+//get seat id and price
         $seat=DB::table('bus_seats')->where('id', $seatId)->value('seat_number');
         $price=DB::table('bus_seats')->where('id', $seatId)->value('price');
 
@@ -62,14 +62,13 @@ class busScheduleBookingController extends Controller
        $busScheduleBooking -> save();
 
 
-       // return  response([
+       return  response([
 
-        //    'message'=>"Booking Successful"
+           'message'=>"Booking Successful"
 
 
-       // ], 401);
+        ], 401);
 
-        return $seat;
 
 
     }
@@ -101,6 +100,8 @@ class busScheduleBookingController extends Controller
 
     }
 
+    //booking timeup
+
     /**
      * Remove the specified resource from storage.
      *
@@ -110,9 +111,6 @@ class busScheduleBookingController extends Controller
     public function destroy($id)
     {
 
-       // $date = new \DateTime();
-        //$date->modify('+3 hours');
-        //$formatted_date = $date->format('Y-m-d H:i:s');
 
         $check_time= DB::table('bus_schedule_bookings')->where('id', $id)->value('created_at');
 

@@ -73,12 +73,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-
-
-
-
-//protected route
-Route::group(['middleware'=>['auth:sanctum']], function () {
+// admin acces filed
+Route::group(['middleware'=>['api:admin']],function (){
 
     Route::post('/buses',[busControl::class, 'store']);
     Route::put('/buses/{id}',[busControl::class, 'update']);
@@ -107,6 +103,14 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::post('/logout',[userController::class, 'logout']);
     Route::put('/changePassword/{id}',[userController::class, 'changePassword']);
 
+
+
+
+});
+
+
+//protected route
+Route::group(['middleware'=>['auth:sanctum']], function () {
 
 
     Route::get('/reset-password/{token}', function ($token) {

@@ -76,7 +76,7 @@ class busSeatesController extends Controller
 
 
     /**
-     * Search bus.
+     * Search seat.
      *
      * @param  int  $name
      * @return \Illuminate\Http\Response

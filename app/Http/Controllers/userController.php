@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Password;
 class userController extends Controller
 {
     public function register(Request $request){
+
         $fields =$request->validate([
 
            'name'=>'required|string|',
@@ -21,7 +22,7 @@ class userController extends Controller
         ]);
 
 //check user
-        if('name' === "admin||Admin") {
+        if($request->name != "admin||Admin") {
 
             $user = User::create([
 
@@ -138,7 +139,7 @@ class userController extends Controller
         ]);
     }
 
-//password rest function
+//password reset function
     public function reset() {
         $credentials = request()->validate(['email' => 'required|email']);
 

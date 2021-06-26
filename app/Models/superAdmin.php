@@ -41,5 +41,10 @@ class superAdmin extends Model
         'email_verified_at' => 'datetime',
     ];
 
+    public function getAuthIdentifier()
+    {
+        return $this->id;
+    }
+
 
 }
