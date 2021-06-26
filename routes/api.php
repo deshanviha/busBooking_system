@@ -4,6 +4,7 @@ use App\Http\Controllers\routeController;
 use App\Http\Controllers\busRouteController;
 use App\Http\Controllers\busSeatesController;
 use App\Http\Controllers\busScheduleController;
+use App\Http\Controllers\busScheduleBookingController;
 use App\Http\Controllers\userController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -73,15 +74,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
- Route::post('/buses',[busControl::class, 'store']);
-
 
 
 
 //protected route
 Route::group(['middleware'=>['auth:sanctum']], function () {
 
-   // Route::post('/buses',[busControl::class, 'store']);
+    Route::post('/buses',[busControl::class, 'store']);
     Route::put('/buses/{id}',[busControl::class, 'update']);
     Route::delete('/buses/{id}',[busControl::class, 'destroy']);
 
@@ -115,6 +114,11 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     })->middleware('guest')->name('password.reset');
 
     Route::post('password/email', [userController::class, 'forgot']);
+
+
+    Route::post('/scheduleBooking/{bus_seat_id}/{user_id}/{bus_schedule_id}',[busScheduleBookingController::class, 'store']);
+    Route::delete('/cancelBooking/{id}',[busScheduleBookingController::class, 'destroy']);
+    Route::get('myBooking/{user_id}',[busScheduleBookingController::class, 'show']);
 
 
 });

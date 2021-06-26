@@ -20,6 +20,7 @@ class userController extends Controller
 
         ]);
 
+//check user
         if('name' === "admin||Admin") {
 
             $user = User::create([
@@ -29,6 +30,8 @@ class userController extends Controller
                 'password' => bcrypt($fields['password'])
 
             ]);
+
+            $token = $user->createToken('userToken')->plainTextToken;
 
         }else{
 
@@ -40,12 +43,9 @@ class userController extends Controller
 
             ]);
 
+            $token = $user->createToken('adminToken')->plainTextToken;
 
         }
-
-
-
-        $token = $user->createToken('bustoken')->plainTextToken;
 
         $response = [
             'user' => $user,
@@ -56,7 +56,7 @@ class userController extends Controller
         return response ($response, 201);
 
     }
-
+//user logout
     public function logout(Request $request){
 
         auth()->user()->tokens()->delete();
@@ -105,6 +105,8 @@ class userController extends Controller
 
     }
 
+    //change password
+
     /**
      * Update the specified resource in storage.
      *
@@ -132,20 +134,17 @@ class userController extends Controller
 
         return response([
 
-           'message'=>"Password reset successfully"
+           'message'=>"Password change successfully"
         ]);
     }
 
-    public function forgot(){
+//password rest function
+    public function reset() {
+        $credentials = request()->validate(['email' => 'required|email']);
 
+        Password::sendResetLink($credentials);
 
-            $credentials = request()->validate(['email' => 'required|email']);
-
-            Password::sendResetLink($credentials);
-
-            return response()->json(["msg" => 'Reset password link sent on your email id.']);
-
-
+        return response()->json(["msg" => 'Reset password link sent on your email id.']);
     }
 
 

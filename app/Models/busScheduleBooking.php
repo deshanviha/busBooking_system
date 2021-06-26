@@ -19,4 +19,5 @@ class busScheduleBooking extends Model
     ];
 
 
+
 }

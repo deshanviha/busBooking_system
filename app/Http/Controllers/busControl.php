@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\superAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\Buses;
+use Illuminate\Support\Facades\DB;
 
 class busControl extends Controller
 {
@@ -24,16 +26,19 @@ class busControl extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+
+
+       $checkid = DB::table('personal_access_tokens')->where('id', $id)->value('name');
 
         $request ->validate([
            'name' => 'required',
            'type' => 'required',
             'vehicle_number' => 'required'
         ]);
-        return Buses::create($request->all());
 
+         return Buses::create($request->all());
 
     }
 
